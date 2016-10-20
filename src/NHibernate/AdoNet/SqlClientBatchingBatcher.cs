@@ -74,6 +74,10 @@ namespace NHibernate.AdoNet
 		{
 			Log.DebugFormat("Executing batch");
 			CheckReaders();
+		    
+            //Ugly hack to propagate timeout into batch
+            if (ps != null) _currentBatch.BatchCommand.CommandTimeout = ps.CommandTimeout;
+
 			Prepare(_currentBatch.BatchCommand);
 			if (Factory.Settings.SqlStatementLogger.IsDebugEnabled)
 			{
